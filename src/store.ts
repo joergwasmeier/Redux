@@ -27,3 +27,12 @@ const enhancer = composeEnhancers(
 );
 
 export default createStore(reducers, enhancer);
+
+export type Store = {
+    router: {
+        location:Location
+    },
+    user: {
+        name: string
+    }
+}

@@ -6,6 +6,7 @@ interface ITest2Props {
 
 export default class Test2 extends React.PureComponent<ITest2Props> {
     render() {
+        console.log("Test2 render");
         return (
             <div>
                 Test2
