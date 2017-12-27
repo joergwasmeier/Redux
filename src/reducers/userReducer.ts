@@ -1,6 +1,7 @@
-const userReducer = (state:any = {}, action) => {
+const userReducer = (state:any = {
+        name:"start"
+    }, action) => {
     const newState = {...state};
-    console.log(action);
     switch (action.type){
         case "CHANGE_NAME":
             newState.name = action.payLoad;
