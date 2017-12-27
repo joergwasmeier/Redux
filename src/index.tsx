@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore, Middleware} from 'redux';
+import {applyMiddleware, combineReducers, createStore, Middleware, compose} from 'redux';
 import userReducer from './reducers/userReducer';
 import tweetsReducer from './reducers/tweetsReducer';
 
@@ -9,7 +9,7 @@ const reducers = combineReducers({
     user:userReducer,
     tweets:tweetsReducer,
 });
-
+declare var window:any;
 const error : Middleware = api => next => action => {
     try {
         return next(action);
@@ -18,13 +18,20 @@ const error : Middleware = api => next => action => {
     }
 };
 
-const middleware = applyMiddleware(thunk, logger, error);
+const middleware = [thunk, logger, error];
 
-const store = createStore(reducers, middleware);
+const composeEnhancers =
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+            // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+        }) : compose;
 
-store.subscribe(() => {
-    console.log("store changed", store.getState());
-});
+const enhancer = composeEnhancers(
+    applyMiddleware(...middleware),
+    // other store enhancers if any
+);
+const store = createStore(reducers, enhancer);
 
 //store.dispatch({type:"CHANGE_NAME", payload:"Will"});
 //store.dispatch({type:"CHANGE_AGE", payload:35});
