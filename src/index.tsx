@@ -1,13 +1,4 @@
 import {createStore} from 'redux';
-
-/*
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
-);
-registerServiceWorker();
-*/
-
 const reducer = (state, action) => {
     if (action.type == "INCRMENT"){
         return state+1;
